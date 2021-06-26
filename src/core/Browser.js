@@ -81,7 +81,7 @@ export var mobileWebkit3d = false;
 
 // @property msPointer: Boolean
 // `true` for browsers implementing the Microsoft touch events model (notably IE10).
-export var msPointer = false && !window.PointerEvent && window.MSPointerEvent;
+export var msPointer = false;
 
 // @property pointer: Boolean
 // `true` for all browsers supporting [pointer events](https://msdn.microsoft.com/en-us/library/dn433244%28v=vs.85%29.aspx).
