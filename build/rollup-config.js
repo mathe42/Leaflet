@@ -4,8 +4,9 @@ import rollupGitVersion from 'rollup-plugin-git-version'
 import json from 'rollup-plugin-json'
 import gitRev from 'git-rev-sync'
 import pkg from '../package.json'
+import esbuild from 'rollup-plugin-esbuild'
 
-let {version} = pkg;
+let { version } = pkg;
 let release;
 
 // Skip the git branch+rev in the banner when doing a release build
@@ -43,7 +44,7 @@ export default {
 			banner: banner,
 			outro: outro,
 			sourcemap: true,
-			legacy: true, // Needed to create files loadable by IE8
+			legacy: false,
 			freeze: false
 		},
 		{
@@ -55,6 +56,10 @@ export default {
 		}
 	],
 	plugins: [
+		esbuild({
+			target: 'es2017',
+			minify: true
+		}),
 		release ? json() : rollupGitVersion()
 	]
 };
