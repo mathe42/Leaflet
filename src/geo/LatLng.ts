@@ -1,5 +1,5 @@
 import { formatNum } from "../core/Util";
-import { Earth } from "./crs/CRS.Earth";
+import { Earth } from "./crs";
 import { toLatLngBounds } from "./LatLngBounds";
 
 /* @class LatLng

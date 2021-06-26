@@ -21,6 +21,18 @@
 
  */
 
-export {LonLat} from './Projection.LonLat';
-export {Mercator} from './Projection.Mercator';
-export {SphericalMercator} from './Projection.SphericalMercator';
+import { Bounds } from "../../geometry/Bounds";
+import { Point } from "../../geometry/Point";
+import { LatLng } from "../LatLng";
+
+export { LonLat } from "./Projection.LonLat";
+export { Mercator } from "./Projection.Mercator";
+export { SphericalMercator } from "./Projection.SphericalMercator";
+
+export interface Projection {
+  project(latlng: LatLng): Point;
+
+  unproject(point: Point): LatLng;
+
+  bounds: Bounds;
+}

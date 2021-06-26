@@ -46,8 +46,8 @@ export class Bounds {
     this.extend(points[1]);
   }
 
-  private min: Point;
-  private max: Point;
+  public min: Point;
+  public max: Point;
 
   // @method extend(point: Point): this
   // Extends the bounds to contain the given point.
