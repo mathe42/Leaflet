@@ -1,9 +1,8 @@
-import {Evented} from '../core/Events';
-import * as Browser from '../core/Browser';
+import { Evented } from '../core/Events';
 import * as DomEvent from './DomEvent';
 import * as DomUtil from './DomUtil';
 import * as Util from '../core/Util';
-import {Point} from '../geometry/Point';
+import { Point } from '../geometry/Point';
 
 /*
  * @class Draggable
@@ -21,7 +20,7 @@ import {Point} from '../geometry/Point';
  * ```
  */
 
-var START = Browser.touch ? 'touchstart mousedown' : 'mousedown';
+var START = 'touchstart mousedown'
 var END = {
 	mousedown: 'mouseup',
 	touchstart: 'touchend',
@@ -113,7 +112,7 @@ export var Draggable = Evented.extend({
 		this.fire('down');
 
 		var first = e.touches ? e.touches[0] : e,
-		    sizedParent = DomUtil.getSizedParentNode(this._element);
+			sizedParent = DomUtil.getSizedParentNode(this._element);
 
 		this._startPoint = new Point(first.clientX, first.clientY);
 
@@ -138,7 +137,7 @@ export var Draggable = Evented.extend({
 		}
 
 		var first = (e.touches && e.touches.length === 1 ? e.touches[0] : e),
-		    offset = new Point(first.clientX, first.clientY)._subtract(this._startPoint);
+			offset = new Point(first.clientX, first.clientY)._subtract(this._startPoint);
 
 		if (!offset.x && !offset.y) { return; }
 		if (Math.abs(offset.x) + Math.abs(offset.y) < this.options.clickTolerance) { return; }
@@ -179,7 +178,7 @@ export var Draggable = Evented.extend({
 	},
 
 	_updatePosition: function () {
-		var e = {originalEvent: this._lastEvent};
+		var e = { originalEvent: this._lastEvent };
 
 		// @event predrag: Event
 		// Fired continuously during dragging *before* each corresponding

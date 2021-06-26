@@ -1,24 +1,23 @@
 import * as DomEvent from './DomEvent';
 import * as Util from '../core/Util';
-import * as Browser from '../core/Browser';
 
 /*
  * Extends L.DomEvent to provide touch support for Internet Explorer and Windows-based devices.
  */
 
 
-var POINTER_DOWN =   Browser.msPointer ? 'MSPointerDown'   : 'pointerdown';
-var POINTER_MOVE =   Browser.msPointer ? 'MSPointerMove'   : 'pointermove';
-var POINTER_UP =     Browser.msPointer ? 'MSPointerUp'     : 'pointerup';
-var POINTER_CANCEL = Browser.msPointer ? 'MSPointerCancel' : 'pointercancel';
+const POINTER_DOWN = 'pointerdown';
+const POINTER_MOVE = 'pointermove';
+const POINTER_UP = 'pointerup';
+const POINTER_CANCEL = 'pointercancel';
 
-var _pointers = {};
-var _pointerDocListener = false;
+let _pointers = {};
+let _pointerDocListener = false;
 
 // Provides a touch events wrapper for (ms)pointer events.
 // ref http://www.w3.org/TR/pointerevents/ https://www.w3.org/Bugs/Public/show_bug.cgi?id=22890
 
-export function addPointerListener(obj, type, handler, id) {
+export function addPointerListener(obj: HTMLElement, type: 'touchstart' | 'touchmove' | 'touchend', handler: Function, id: string) {
 	if (type === 'touchstart') {
 		_addPointerStart(obj, handler, id);
 
