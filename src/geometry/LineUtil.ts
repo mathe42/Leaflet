@@ -1,3 +1,4 @@
+import { LatLngLike } from "../geo/LatLng";
 import { Point } from "./Point";
 
 /*
@@ -255,17 +256,18 @@ export function _sqClosestPointOnSegment(
   return sqDist ? dx * dx + dy * dy : new Point(x, y);
 }
 
-export type LatLng = [number, number];
-
 // @function isFlat(latlngs: LatLng[]): Boolean
 // Returns true if `latlngs` is a flat array, false is nested.
-export function isFlat(latlngs: LatLng[]) {
+export function isFlat(latlngs: LatLngLike[]) {
   return (
     !Array.isArray(latlngs[0]) ||
     (typeof latlngs[0][0] !== "object" && typeof latlngs[0][0] !== "undefined")
   );
 }
 
+/**
+ * @deprecated
+ */
 export function _flat(latlngs) {
   console.warn(
     "Deprecated use of _flat, please use L.LineUtil.isFlat instead."
