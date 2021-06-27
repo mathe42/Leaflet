@@ -152,21 +152,6 @@ export function setOpacity(el: HTMLElement, value: number) {
   el.style.opacity = value.toString();
 }
 
-// @function testProp(props: String[]): String|false
-// Goes through the array of style names and returns the first name
-// that is a valid style name for an element. If no such name is found,
-// it returns false. Useful for vendor-prefixed styles like `transform`.
-export function testProp(props: string[]): string | false {
-  var style = document.documentElement.style;
-
-  for (var i = 0; i < props.length; i++) {
-    if (props[i] in style) {
-      return props[i];
-    }
-  }
-  return false;
-}
-
 // @function setTransform(el: HTMLElement, offset: Point, scale?: Number)
 // Resets the 3D CSS transform of `el` so it is translated by `offset` pixels
 // and optionally scaled by `scale`. Does not have an effect if the

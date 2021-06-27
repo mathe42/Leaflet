@@ -31,21 +31,23 @@ export function addPointerListener(obj: HTMLElement, type: 'touchstart' | 'touch
 	return this;
 }
 
-export function removePointerListener(obj, type, id) {
-	var handler = obj['_leaflet_' + type + id];
+export function removePointerListener(
+  obj: HTMLElement,
+  type: "touchstart" | "touchmove" | "touchend",
+  id: string
+) {
+  var handler = obj["_leaflet_" + type + id];
 
-	if (type === 'touchstart') {
-		obj.removeEventListener(POINTER_DOWN, handler, false);
+  if (type === "touchstart") {
+    obj.removeEventListener(POINTER_DOWN, handler, false);
+  } else if (type === "touchmove") {
+    obj.removeEventListener(POINTER_MOVE, handler, false);
+  } else if (type === "touchend") {
+    obj.removeEventListener(POINTER_UP, handler, false);
+    obj.removeEventListener(POINTER_CANCEL, handler, false);
+  }
 
-	} else if (type === 'touchmove') {
-		obj.removeEventListener(POINTER_MOVE, handler, false);
-
-	} else if (type === 'touchend') {
-		obj.removeEventListener(POINTER_UP, handler, false);
-		obj.removeEventListener(POINTER_CANCEL, handler, false);
-	}
-
-	return this;
+  return this;
 }
 
 function _addPointerStart(obj, handler, id) {
