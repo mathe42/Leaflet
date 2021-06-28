@@ -12,10 +12,10 @@ import * as DomEvent from '../dom/DomEvent';
  * A basic zoom control with two buttons (zoom in and zoom out). It is put on the map by default unless you set its [`zoomControl` option](#map-zoomcontrol) to `false`. Extends `Control`.
  */
 
-export var Zoom = Control.extend({
+export class Zoom extends Control{
 	// @section
 	// @aka Control.Zoom options
-	options: {
+	options = {
 		position: 'topleft',
 
 		// @option zoomInText: String = '+'
@@ -33,9 +33,9 @@ export var Zoom = Control.extend({
 		// @option zoomOutTitle: String = 'Zoom out'
 		// The title set on the 'zoom out' button.
 		zoomOutTitle: 'Zoom out'
-	},
+	}
 
-	onAdd: function (map) {
+	onAdd(map) {
 		var zoomName = 'leaflet-control-zoom',
 		    container = DomUtil.create('div', zoomName + ' leaflet-bar'),
 		    options = this.options;
@@ -49,37 +49,37 @@ export var Zoom = Control.extend({
 		map.on('zoomend zoomlevelschange', this._updateDisabled, this);
 
 		return container;
-	},
+	}
 
-	onRemove: function (map) {
+	onRemove(map) {
 		map.off('zoomend zoomlevelschange', this._updateDisabled, this);
-	},
+	}
 
-	disable: function () {
+	disable() {
 		this._disabled = true;
 		this._updateDisabled();
 		return this;
-	},
+	}
 
-	enable: function () {
+	enable() {
 		this._disabled = false;
 		this._updateDisabled();
 		return this;
-	},
+	}
 
-	_zoomIn: function (e) {
+	_zoomIn(e) {
 		if (!this._disabled && this._map._zoom < this._map.getMaxZoom()) {
 			this._map.zoomIn(this._map.options.zoomDelta * (e.shiftKey ? 3 : 1));
 		}
-	},
+	}
 
-	_zoomOut: function (e) {
+	_zoomOut(e) {
 		if (!this._disabled && this._map._zoom > this._map.getMinZoom()) {
 			this._map.zoomOut(this._map.options.zoomDelta * (e.shiftKey ? 3 : 1));
 		}
-	},
+	}
 
-	_createButton: function (html, title, className, container, fn) {
+	_createButton(html, title, className, container, fn) {
 		var link = DomUtil.create('a', className, container);
 		link.innerHTML = html;
 		link.href = '#';
@@ -97,9 +97,9 @@ export var Zoom = Control.extend({
 		DomEvent.on(link, 'click', this._refocusOnMap, this);
 
 		return link;
-	},
+	}
 
-	_updateDisabled: function () {
+	_updateDisabled() {
 		var map = this._map,
 		    className = 'leaflet-disabled';
 
@@ -117,7 +117,7 @@ export var Zoom = Control.extend({
 			this._zoomInButton.setAttribute('aria-disabled', 'true');
 		}
 	}
-});
+}
 
 // @namespace Map
 // @section Control options

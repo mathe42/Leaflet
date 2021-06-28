@@ -4,8 +4,10 @@ import rollupGitVersion from 'rollup-plugin-git-version'
 import json from 'rollup-plugin-json'
 import gitRev from 'git-rev-sync'
 import pkg from '../package.json'
+import esbuild from 'rollup-plugin-esbuild'
+import buble from '@rollup/plugin-buble';
 
-let {version} = pkg;
+let { version } = pkg;
 let release;
 
 // Skip the git branch+rev in the banner when doing a release build
@@ -33,28 +35,96 @@ exports.noConflict = function() {
 // Always export us to window global (see #2364)
 window.L = exports;`;
 
-export default {
-	input: 'src/Leaflet.js',
-	output: [
-		{
+
+const releasePlugin = release ? json() : rollupGitVersion()
+
+const minify = false
+
+export default [
+	{
+		input: 'src/Leaflet.js',
+		output: [
+			{
+				file: 'dist/leaflet-src.esm.js',
+				format: 'es',
+				banner: banner,
+				sourcemap: true,
+				freeze: false
+			}
+		],
+		plugins: [
+			releasePlugin,
+			esbuild({
+				target: 'es2017',
+				minify: minify,
+				minifyIdentifiers: minify,
+				minifySyntax: minify,
+				minifyWhitespace: minify
+			})
+		]
+	},
+	{
+		input: 'src/Leaflet.js',
+		output: [
+			{
+				file: 'dist/leaflet-es6.js',
+				format: 'es',
+				sourcemap: true,
+				freeze: false
+			}
+		],
+		plugins: [
+			releasePlugin,
+			esbuild({
+				target: 'es6',
+				minify: minify,
+				minifyIdentifiers: minify,
+				minifySyntax: minify,
+				minifyWhitespace: minify
+			})
+		]
+	},
+	{
+		input: 'dist/leaflet-es6.js',
+		output: {
 			file: pkg.main,
 			format: 'umd',
 			name: 'L',
 			banner: banner,
 			outro: outro,
 			sourcemap: true,
-			legacy: true, // Needed to create files loadable by IE8
 			freeze: false
 		},
-		{
-			file: 'dist/leaflet-src.esm.js',
-			format: 'es',
-			banner: banner,
-			sourcemap: true,
-			freeze: false
-		}
-	],
-	plugins: [
-		release ? json() : rollupGitVersion()
-	]
-};
+		plugins: [
+			buble()
+		]
+	}
+];
+
+
+
+// export default {
+// 	input: 'src/Leaflet.js',
+// 	output: [
+// 		{
+// 			file: pkg.main,
+// 			format: 'umd',
+// 			name: 'L',
+// 			banner: banner,
+// 			outro: outro,
+// 			sourcemap: true,
+// 			legacy: true, // Needed to create files loadable by IE8
+// 			freeze: false
+// 		},
+// 		{
+// 			file: 'dist/leaflet-src.esm.js',
+// 			format: 'es',
+// 			banner: banner,
+// 			sourcemap: true,
+// 			freeze: false
+// 		}
+// 	],
+// 	plugins: [
+// 		release ? json() : rollupGitVersion()
+// 	]
+// };
