@@ -109,7 +109,7 @@ export class Layers extends Control {
 	}
 
 	addTo(map) {
-		Control.prototype.addTo.call(this, map);
+		super.addTo(this, map);
 		// Trigger expand after Layers Control has been inserted into DOM so that is now has an actual height.
 		return this._expandIfNotCollapsed();
 	}

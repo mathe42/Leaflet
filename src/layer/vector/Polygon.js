@@ -98,7 +98,7 @@ export class Polygon extends Polyline {
 	}
 
 	_convertLatLngs(latlngs) {
-		var result = Polyline.prototype._convertLatLngs.call(this, latlngs),
+		var result = super._convertLatLngs(latlngs),
 		    len = result.length;
 
 		// remove last point if it equals first one
@@ -173,7 +173,7 @@ export class Polygon extends Polyline {
 		}
 
 		// also check if it's on polygon stroke
-		return inside || Polyline.prototype._containsPoint.call(this, p, true);
+		return inside || super._containsPoint(p, true);
 	}
 
 }

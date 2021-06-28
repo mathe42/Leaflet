@@ -39,7 +39,7 @@ import {Bounds} from '../../geometry/Bounds';
 
 export class Canvas extends Renderer {
 	getEvents() {
-		var events = Renderer.prototype.getEvents.call(this);
+		var events = super.getEvents();
 		events.viewprereset = this._onViewPreReset;
 		return events;
 	}
@@ -50,7 +50,7 @@ export class Canvas extends Renderer {
 	}
 
 	onAdd() {
-		Renderer.prototype.onAdd.call(this);
+		super.onAdd();
 
 		// Redraw vectors since canvas is cleared upon removal,
 		// in case of removing the renderer itself from the map.
@@ -90,7 +90,7 @@ export class Canvas extends Renderer {
 	_update() {
 		if (this._map._animatingZoom && this._bounds) { return; }
 
-		Renderer.prototype._update.call(this);
+		super._update();
 
 		var b = this._bounds,
 		    container = this._container,
@@ -117,7 +117,7 @@ export class Canvas extends Renderer {
 	}
 
 	_reset() {
-		Renderer.prototype._reset.call(this);
+		super._reset();
 
 		if (this._postponeUpdatePaths) {
 			this._postponeUpdatePaths = false;

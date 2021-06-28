@@ -31,7 +31,7 @@ export class FeatureGroup extends LayerGroup {
 
 		layer.addEventParent(this);
 
-		LayerGroup.prototype.addLayer.call(this, layer);
+		super.addLayer(layer);
 
 		// @event layeradd: LayerEvent
 		// Fired when a layer is added to this `FeatureGroup`
@@ -48,7 +48,7 @@ export class FeatureGroup extends LayerGroup {
 
 		layer.removeEventParent(this);
 
-		LayerGroup.prototype.removeLayer.call(this, layer);
+		super.removeLayer(layer);
 
 		// @event layerremove: LayerEvent
 		// Fired when a layer is removed from this `FeatureGroup`

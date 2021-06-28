@@ -19,6 +19,12 @@ export class Class {
 		}
 
 		this.callInitHooks();
+
+		Object.keys(this).forEach(key => {
+			if (typeof this[key] === 'function') {
+				this[key] = this[key].bind(this)
+			}
+		})
 	}
 
 	callInitHooks() {
@@ -106,6 +112,7 @@ export class Class {
 	// @function include(properties: Object): this
 	// [Includes a mixin](#class-includes) into the current class.
 	static include(props) {
+		console.log(this, this.prototype, props, this.__proto__)
 		Util.extend(this.prototype, props);
 		return this;
 	}

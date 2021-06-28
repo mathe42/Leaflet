@@ -48,7 +48,7 @@ export var create = Browser.vml ? vmlCreate : svgCreate;
 export class SVG extends Renderer {
 
 	getEvents() {
-		var events = Renderer.prototype.getEvents.call(this);
+		var events = super.getEvents();
 		events.zoomstart = this._onZoomStart;
 		return events;
 	}
@@ -81,7 +81,7 @@ export class SVG extends Renderer {
 	_update() {
 		if (this._map._animatingZoom && this._bounds) { return; }
 
-		Renderer.prototype._update.call(this);
+		super._update();
 
 		var b = this._bounds,
 		    size = b.getSize(),

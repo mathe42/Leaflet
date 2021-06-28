@@ -110,7 +110,7 @@ export class Popup extends DivOverlay {
 	}
 
 	onAdd(map) {
-		DivOverlay.prototype.onAdd.call(this, map);
+		super.onAdd(map);
 
 		// @namespace Map
 		// @section Popup events
@@ -133,7 +133,7 @@ export class Popup extends DivOverlay {
 	}
 
 	onRemove(map) {
-		DivOverlay.prototype.onRemove.call(this, map);
+		super.onRemove(map);
 
 		// @namespace Map
 		// @section Popup events
@@ -154,7 +154,7 @@ export class Popup extends DivOverlay {
 	}
 
 	getEvents() {
-		var events = DivOverlay.prototype.getEvents.call(this);
+		var events = super.getEvents();
 
 		if (this.options.closeOnClick !== undefined ? this.options.closeOnClick : this._map.options.closePopupOnClick) {
 			events.preclick = this._close;
