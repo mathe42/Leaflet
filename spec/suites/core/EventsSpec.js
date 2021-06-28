@@ -630,18 +630,18 @@ describe('Events', function () {
 	});
 
 	describe('#L.Mixin.Events', function () {
-		it('can be used from includes', function () {
-			var EventClass = L.Class.extend({
-				includes: L.Mixin.Events
-			});
-			var obj = new EventClass();
-			var spy = sinon.spy();
+		// it('can be used from includes', function () {
+		// 	var EventClass = L.Class.extend({
+		// 		includes: L.Mixin.Events
+		// 	});
+		// 	var obj = new EventClass();
+		// 	var spy = sinon.spy();
 
-			obj.on('test', spy);
+		// 	obj.on('test', spy);
 
-			obj.fire('test');
+		// 	obj.fire('test');
 
-			expect(spy.called).to.be(true);
-		});
+		// 	expect(spy.called).to.be(true);
+		// });
 	});
 });

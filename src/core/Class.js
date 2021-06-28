@@ -9,6 +9,28 @@ import * as Util from './Util';
 // Thanks to John Resig and Dean Edwards for inspiration!
 
 export class Class {
+	_initHooks = []
+
+	constructor(...args) {
+		console.log('options', args)
+
+		if (this.initialize) {
+			this.initialize(...args);
+		}
+
+		this.callInitHooks();
+	}
+
+	callInitHooks() {
+		if (this._initHooksCalled) { return; }
+
+		this._initHooksCalled = true;
+
+		for (var i = 0, len = this._initHooks.length; i < len; i++) {
+			this._initHooks[i].call(this);
+		}
+	}
+
 	static extend(props) {
 
 		// @function extend(props: Object): Function

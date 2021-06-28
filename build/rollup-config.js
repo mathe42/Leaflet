@@ -56,10 +56,10 @@ export default [
 			releasePlugin,
 			esbuild({
 				target: 'es2017',
-				minify: minify,
-				minifyIdentifiers: minify,
-				minifySyntax: minify,
-				minifyWhitespace: minify
+				minify: true,
+				minifyIdentifiers: true,
+				minifySyntax: true,
+				minifyWhitespace: true
 			})
 		]
 	},
@@ -77,26 +77,26 @@ export default [
 			releasePlugin,
 			esbuild({
 				target: 'es6',
-				minify: minify,
-				minifyIdentifiers: minify,
-				minifySyntax: minify,
-				minifyWhitespace: minify
+				minify: false,
+				minifyIdentifiers: false,
+				minifySyntax: false,
+				minifyWhitespace: false
 			})
 		]
 	},
 	{
-		input: 'dist/leaflet-es6.js',
+		input: './src/leaflet-window.js',
 		output: {
 			file: pkg.main,
 			format: 'umd',
 			name: 'L',
 			banner: banner,
-			outro: outro,
+			// outro: outro,
 			sourcemap: true,
 			freeze: false
 		},
 		plugins: [
-			buble()
+			buble({ transforms: { dangerousForOf: true }})
 		]
 	}
 ];

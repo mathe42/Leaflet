@@ -17,9 +17,10 @@ import * as DomUtil from '../../dom/DomUtil';
  * `L.Marker.prototype.options.icon` with your own icon instead.
  */
 
-export var IconDefault = Icon.extend({
+export class IconDefault extends Icon {
 
-	options: {
+	options = {
+		...super.options,
 		iconUrl:       'marker-icon.png',
 		iconRetinaUrl: 'marker-icon-2x.png',
 		shadowUrl:     'marker-shadow.png',
@@ -28,9 +29,9 @@ export var IconDefault = Icon.extend({
 		popupAnchor: [1, -34],
 		tooltipAnchor: [16, -28],
 		shadowSize:  [41, 41]
-	},
+	}
 
-	_getIconUrl: function (name) {
+	_getIconUrl(name) {
 		if (!IconDefault.imagePath) {	// Deprecated, backwards-compatibility only
 			IconDefault.imagePath = this._detectIconPath();
 		}
@@ -40,9 +41,9 @@ export var IconDefault = Icon.extend({
 		// blue icon images. If you are placing these images in a non-standard
 		// way, set this option to point to the right path.
 		return (this.options.imagePath || IconDefault.imagePath) + Icon.prototype._getIconUrl.call(this, name);
-	},
+	}
 
-	_detectIconPath: function () {
+	_detectIconPath() {
 		var el = DomUtil.create('div',  'leaflet-default-icon-path', document.body);
 		var path = DomUtil.getStyle(el, 'background-image') ||
 		           DomUtil.getStyle(el, 'backgroundImage');	// IE8
@@ -57,4 +58,4 @@ export var IconDefault = Icon.extend({
 
 		return path;
 	}
-});
+}

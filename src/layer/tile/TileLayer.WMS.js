@@ -22,14 +22,15 @@ import {toBounds} from '../../geometry/Bounds';
  * ```
  */
 
-export var TileLayerWMS = TileLayer.extend({
+export class TileLayerWMS extends TileLayer {
 
 	// @section
 	// @aka TileLayer.WMS options
 	// If any custom options not documented here are used, they will be sent to the
 	// WMS server as extra parameters in each request URL. This can be useful for
 	// [non-standard vendor WMS parameters](http://docs.geoserver.org/stable/en/user/services/wms/vendor.html).
-	defaultWmsParams: {
+	defaultWmsParams = {
+		...super.options,
 		service: 'WMS',
 		request: 'GetMap',
 
@@ -52,9 +53,9 @@ export var TileLayerWMS = TileLayer.extend({
 		// @option version: String = '1.1.1'
 		// Version of the WMS service to use
 		version: '1.1.1'
-	},
+	}
 
-	options: {
+	options = {
 		// @option crs: CRS = null
 		// Coordinate Reference System to use for the WMS requests, defaults to
 		// map CRS. Don't change this if you're not sure what it means.
@@ -63,9 +64,9 @@ export var TileLayerWMS = TileLayer.extend({
 		// @option uppercase: Boolean = false
 		// If `true`, WMS request parameter keys will be uppercase.
 		uppercase: false
-	},
+	}
 
-	initialize: function (url, options) {
+	initialize(url, options) {
 
 		this._url = url;
 
@@ -86,9 +87,9 @@ export var TileLayerWMS = TileLayer.extend({
 		wmsParams.height = tileSize.y * realRetina;
 
 		this.wmsParams = wmsParams;
-	},
+	}
 
-	onAdd: function (map) {
+	onAdd(map) {
 
 		this._crs = this.options.crs || map.options.crs;
 		this._wmsVersion = parseFloat(this.wmsParams.version);
@@ -97,9 +98,9 @@ export var TileLayerWMS = TileLayer.extend({
 		this.wmsParams[projectionKey] = this._crs.code;
 
 		TileLayer.prototype.onAdd.call(this, map);
-	},
+	}
 
-	getTileUrl: function (coords) {
+	getTileUrl(coords) {
 
 		var tileBounds = this._tileCoordsToNwSe(coords),
 		    crs = this._crs,
@@ -113,11 +114,11 @@ export var TileLayerWMS = TileLayer.extend({
 		return url +
 			getParamString(this.wmsParams, url, this.options.uppercase) +
 			(this.options.uppercase ? '&BBOX=' : '&bbox=') + bbox;
-	},
+	}
 
 	// @method setParams(params: Object, noRedraw?: Boolean): this
 	// Merges an object with the new parameters and re-requests tiles on the current screen (unless `noRedraw` was set to true).
-	setParams: function (params, noRedraw) {
+	setParams(params, noRedraw) {
 
 		extend(this.wmsParams, params);
 
@@ -127,7 +128,7 @@ export var TileLayerWMS = TileLayer.extend({
 
 		return this;
 	}
-});
+}
 
 
 // @factory L.tileLayer.wms(baseUrl: String, options: TileLayer.WMS options)

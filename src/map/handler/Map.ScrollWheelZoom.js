@@ -28,18 +28,18 @@ Map.mergeOptions({
 	wheelPxPerZoomLevel: 60
 });
 
-export var ScrollWheelZoom = Handler.extend({
-	addHooks: function () {
+export class ScrollWheelZoom extends Handler {
+	addHooks() {
 		DomEvent.on(this._map._container, 'wheel', this._onWheelScroll, this);
 
 		this._delta = 0;
-	},
+	}
 
-	removeHooks: function () {
+	removeHooks() {
 		DomEvent.off(this._map._container, 'wheel', this._onWheelScroll, this);
-	},
+	}
 
-	_onWheelScroll: function (e) {
+	_onWheelScroll(e) {
 		var delta = DomEvent.getWheelDelta(e);
 
 		var debounce = this._map.options.wheelDebounceTime;
@@ -57,9 +57,9 @@ export var ScrollWheelZoom = Handler.extend({
 		this._timer = setTimeout(Util.bind(this._performZoom, this), left);
 
 		DomEvent.stop(e);
-	},
+	}
 
-	_performZoom: function () {
+	_performZoom() {
 		var map = this._map,
 		    zoom = map.getZoom(),
 		    snap = this._map.options.zoomSnap || 0;
@@ -83,7 +83,7 @@ export var ScrollWheelZoom = Handler.extend({
 			map.setZoomAround(this._lastMousePos, zoom + delta);
 		}
 	}
-});
+}
 
 // @section Handlers
 // @property scrollWheelZoom: Handler

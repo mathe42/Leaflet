@@ -23,12 +23,12 @@ import {requestAnimFrame, cancelAnimFrame} from '../../core/Util';
  * Marker dragging handler (by both mouse and touch). Only valid when the marker is on the map (Otherwise set [`marker.options.draggable`](#marker-draggable)).
  */
 
-export var MarkerDrag = Handler.extend({
-	initialize: function (marker) {
+export class MarkerDrag extends Handler {
+	initialize(marker) {
 		this._marker = marker;
-	},
+	}
 
-	addHooks: function () {
+	addHooks() {
 		var icon = this._marker._icon;
 
 		if (!this._draggable) {
@@ -43,9 +43,9 @@ export var MarkerDrag = Handler.extend({
 		}, this).enable();
 
 		DomUtil.addClass(icon, 'leaflet-marker-draggable');
-	},
+	}
 
-	removeHooks: function () {
+	removeHooks() {
 		this._draggable.off({
 			dragstart: this._onDragStart,
 			predrag: this._onPreDrag,
@@ -56,13 +56,13 @@ export var MarkerDrag = Handler.extend({
 		if (this._marker._icon) {
 			DomUtil.removeClass(this._marker._icon, 'leaflet-marker-draggable');
 		}
-	},
+	}
 
-	moved: function () {
+	moved() {
 		return this._draggable && this._draggable._moved;
-	},
+	}
 
-	_adjustPan: function (e) {
+	_adjustPan(e) {
 		var marker = this._marker,
 		    map = marker._map,
 		    speed = this._marker.options.autoPanSpeed,
@@ -96,9 +96,9 @@ export var MarkerDrag = Handler.extend({
 
 			this._panRequest = requestAnimFrame(this._adjustPan.bind(this, e));
 		}
-	},
+	}
 
-	_onDragStart: function () {
+	_onDragStart() {
 		// @section Dragging events
 		// @event dragstart: Event
 		// Fired when the user starts dragging the marker.
@@ -114,16 +114,16 @@ export var MarkerDrag = Handler.extend({
 		this._marker
 			.fire('movestart')
 			.fire('dragstart');
-	},
+	}
 
-	_onPreDrag: function (e) {
+	_onPreDrag(e) {
 		if (this._marker.options.autoPan) {
 			cancelAnimFrame(this._panRequest);
 			this._panRequest = requestAnimFrame(this._adjustPan.bind(this, e));
 		}
-	},
+	}
 
-	_onDrag: function (e) {
+	_onDrag(e) {
 		var marker = this._marker,
 		    shadow = marker._shadow,
 		    iconPos = DomUtil.getPosition(marker._icon),
@@ -143,9 +143,9 @@ export var MarkerDrag = Handler.extend({
 		marker
 		    .fire('move', e)
 		    .fire('drag', e);
-	},
+	}
 
-	_onDragEnd: function (e) {
+	_onDragEnd(e) {
 		// @event dragend: DragEndEvent
 		// Fired when the user stops dragging the marker.
 
@@ -158,4 +158,4 @@ export var MarkerDrag = Handler.extend({
 		    .fire('moveend')
 		    .fire('dragend', e);
 	}
-});
+}

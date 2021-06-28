@@ -23,8 +23,8 @@ import * as Util from '../core/Util';
  * ```
  */
 
-export var SVGOverlay = ImageOverlay.extend({
-	_initImage: function () {
+export class SVGOverlay extends ImageOverlay {
+	_initImage() {
 		var el = this._image = this._url;
 
 		DomUtil.addClass(el, 'leaflet-image-layer');
@@ -38,7 +38,7 @@ export var SVGOverlay = ImageOverlay.extend({
 	// @method getElement(): SVGElement
 	// Returns the instance of [`SVGElement`](https://developer.mozilla.org/docs/Web/API/SVGElement)
 	// used by this overlay.
-});
+}
 
 
 // @factory L.svgOverlay(svg: String|SVGElement, bounds: LatLngBounds, options?: SVGOverlay options)

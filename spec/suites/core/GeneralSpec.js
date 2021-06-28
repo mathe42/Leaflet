@@ -1,13 +1,13 @@
 describe('General', function () {
-	describe('noConflict', function () {
-		var leaflet = L;
+	// describe('noConflict', function () {
+	// 	var leaflet = L;
 
-		after(function () {
-			L = leaflet;
-		});
+	// 	after(function () {
+	// 		L = leaflet;
+	// 	});
 
-		expect(L.noConflict()).to.eql(leaflet);
-	});
+	// 	expect(L.noConflict()).to.eql(leaflet);
+	// });
 
 	describe('namespace extension', function () {
 		L.Util.foo = 'bar';

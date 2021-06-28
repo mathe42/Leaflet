@@ -51,17 +51,18 @@ import * as PolyUtil from '../../geometry/PolyUtil';
  * ```
  */
 
-export var Polygon = Polyline.extend({
+export class Polygon extends Polyline {
 
-	options: {
+	options = {
+		...super.options,
 		fill: true
-	},
+	}
 
-	isEmpty: function () {
+	isEmpty() {
 		return !this._latlngs.length || !this._latlngs[0].length;
-	},
+	}
 
-	getCenter: function () {
+	getCenter() {
 		// throws error when not yet added to map as this center calculation requires projected coordinates
 		if (!this._map) {
 			throw new Error('Must add layer to map before using getCenter()');
@@ -94,9 +95,9 @@ export var Polygon = Polyline.extend({
 			center = [x / area, y / area];
 		}
 		return this._map.layerPointToLatLng(center);
-	},
+	}
 
-	_convertLatLngs: function (latlngs) {
+	_convertLatLngs(latlngs) {
 		var result = Polyline.prototype._convertLatLngs.call(this, latlngs),
 		    len = result.length;
 
@@ -105,20 +106,20 @@ export var Polygon = Polyline.extend({
 			result.pop();
 		}
 		return result;
-	},
+	}
 
-	_setLatLngs: function (latlngs) {
+	_setLatLngs(latlngs) {
 		Polyline.prototype._setLatLngs.call(this, latlngs);
 		if (LineUtil.isFlat(this._latlngs)) {
 			this._latlngs = [this._latlngs];
 		}
-	},
+	}
 
-	_defaultShape: function () {
+	_defaultShape() {
 		return LineUtil.isFlat(this._latlngs[0]) ? this._latlngs[0] : this._latlngs[0][0];
-	},
+	}
 
-	_clipPoints: function () {
+	_clipPoints() {
 		// polygons need a different clipping algorithm so we redefine that
 
 		var bounds = this._renderer._bounds,
@@ -144,14 +145,14 @@ export var Polygon = Polyline.extend({
 				this._parts.push(clipped);
 			}
 		}
-	},
+	}
 
-	_updatePath: function () {
+	_updatePath() {
 		this._renderer._updatePoly(this, true);
-	},
+	}
 
 	// Needed by the `Canvas` renderer for interactivity
-	_containsPoint: function (p) {
+	_containsPoint(p) {
 		var inside = false,
 		    part, p1, p2, i, j, k, len, len2;
 
@@ -175,7 +176,7 @@ export var Polygon = Polyline.extend({
 		return inside || Polyline.prototype._containsPoint.call(this, p, true);
 	}
 
-});
+}
 
 
 // @factory L.polygon(latlngs: LatLng[], options?: Polyline options)

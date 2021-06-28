@@ -21,11 +21,12 @@ import * as Util from '../core/Util';
  * ```
  */
 
-export var VideoOverlay = ImageOverlay.extend({
+export class VideoOverlay extends ImageOverlay {
 
 	// @section
 	// @aka VideoOverlay options
-	options: {
+	options = {
+		...super.options,
 		// @option autoplay: Boolean = true
 		// Whether the video starts playing automatically when loaded.
 		autoplay: true,
@@ -42,9 +43,9 @@ export var VideoOverlay = ImageOverlay.extend({
 		// @option muted: Boolean = false
 		// Whether the video starts on mute when loaded.
 		muted: false
-	},
+	}
 
-	_initImage: function () {
+	_initImage() {
 		var wasElementSupplied = this._url.tagName === 'VIDEO';
 		var vid = this._image = wasElementSupplied ? this._url : DomUtil.create('video');
 
@@ -88,7 +89,7 @@ export var VideoOverlay = ImageOverlay.extend({
 	// @method getElement(): HTMLVideoElement
 	// Returns the instance of [`HTMLVideoElement`](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement)
 	// used by this overlay.
-});
+}
 
 
 // @factory L.videoOverlay(video: String|Array|HTMLVideoElement, bounds: LatLngBounds, options?: VideoOverlay options)

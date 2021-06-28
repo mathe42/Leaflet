@@ -17,16 +17,16 @@ Map.mergeOptions({
 	doubleClickZoom: true
 });
 
-export var DoubleClickZoom = Handler.extend({
-	addHooks: function () {
+export class DoubleClickZoom extends Handler {
+	addHooks() {
 		this._map.on('dblclick', this._onDoubleClick, this);
-	},
+	}
 
-	removeHooks: function () {
+	removeHooks() {
 		this._map.off('dblclick', this._onDoubleClick, this);
-	},
+	}
 
-	_onDoubleClick: function (e) {
+	_onDoubleClick(e) {
 		var map = this._map,
 		    oldZoom = map.getZoom(),
 		    delta = map.options.zoomDelta,
@@ -38,7 +38,7 @@ export var DoubleClickZoom = Handler.extend({
 			map.setZoomAround(e.containerPoint, zoom);
 		}
 	}
-});
+}
 
 // @section Handlers
 //
