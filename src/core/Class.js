@@ -9,10 +9,15 @@ import * as Util from './Util';
 // Thanks to John Resig and Dean Edwards for inspiration!
 
 export class Class {
-	_initHooks = []
-
 	constructor(...args) {
-		console.log('options', args)
+		if (this.options) {
+			this.prototype.options = Util.extend({}, this.options)
+		}
+
+		// console.log('options', args)
+		if (this._option_gen) {
+			this.options = Util.extend(this.options, this._option_gen())
+		}
 
 		if (this.initialize) {
 			this.initialize(...args);
@@ -29,6 +34,7 @@ export class Class {
 
 	callInitHooks() {
 		if (this._initHooksCalled) { return; }
+		if (!this._initHooks) { return; }
 
 		this._initHooksCalled = true;
 
@@ -112,15 +118,23 @@ export class Class {
 	// @function include(properties: Object): this
 	// [Includes a mixin](#class-includes) into the current class.
 	static include(props) {
-		console.log(this, this.prototype, props, this.__proto__)
-		Util.extend(this.prototype, props);
+		// console.log(this, this.prototype, props, this.__proto__)
+		this.prototype = Util.extend(this.prototype, props);
 		return this;
 	}
 
 	// @function mergeOptions(options: Object): this
 	// [Merges `options`](#class-options) into the defaults of the class.
 	static mergeOptions(options) {
-		Util.extend(this.prototype.options, options);
+		if (this.prototype._option_gen) {
+			const old = this.prototype._option_gen
+
+			this.prototype._option_gen = () => {
+				return extend(options, old())
+			}
+		}
+
+		// Util.extend(this.prototype.options ?? {}, options);
 		return this;
 	}
 

@@ -22,7 +22,7 @@ Map.mergeOptions({
 });
 
 export class Keyboard extends Handler {
-	keyCodes = {
+	static keyCodes = {
 		left: [37],
 		right: [39],
 		down: [40],
@@ -98,7 +98,7 @@ export class Keyboard extends Handler {
 
 	_setPanDelta(panDelta) {
 		var keys = this._panKeys = {},
-			codes = this.keyCodes,
+			codes = Keyboard.keyCodes,
 			i, len;
 
 		for (i = 0, len = codes.left.length; i < len; i++) {
@@ -117,7 +117,7 @@ export class Keyboard extends Handler {
 
 	_setZoomDelta(zoomDelta) {
 		var keys = this._zoomKeys = {},
-			codes = this.keyCodes,
+			codes = Keyboard.keyCodes,
 			i, len;
 
 		for (i = 0, len = codes.zoomIn.length; i < len; i++) {
